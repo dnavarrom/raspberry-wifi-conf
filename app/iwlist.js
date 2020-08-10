@@ -25,6 +25,10 @@ module.exports = function(cmd_options, callback) {
             return callback(error, output)
         }
 
+	console.log("DEBUG iwList");
+	console.dir(stdout, {depth:null});
+
+
         /* The output structure looks like this:
         [
             {

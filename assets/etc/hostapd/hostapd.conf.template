@@ -3,6 +3,7 @@ interface={{ wifi_interface }}
 driver={{ wifi_driver_type }}
 
 ssid={{ ssid }}
+country_code=US
 hw_mode=g
 channel=7
 wmm_enabled=0

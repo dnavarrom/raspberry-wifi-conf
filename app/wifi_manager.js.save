@@ -76,9 +76,9 @@ module.exports = function() {
                     }
                 }
 
-		if (config.debug.enabled) {
-		    console.log("DEBUG: output for command : " + cmd);
-		    console.dir(output, {depth:null});
+		if (config.debug) {
+
+				console.dir()
 		}
                 
                 callback(null);
@@ -226,21 +226,7 @@ module.exports = function() {
 
                 function restart_hostapd_service(next_step) {
                     exec("sudo systemctl restart hostapd", function(error, stdout, stderr) {
-                        if (config.debug.enabled) {
-				console.log("DEBUG: sudo systemctl restart hostapd");
-				console.dir(stdout, {depth:null});
-				console.dir(stderr, {depth:null});
-			}
-				if (stderr) {
-					exec("sudo systemctl unmask hostapd", function(err, stout, serr) {
-						if (err) console.log(err);
-						else {
-							console.log(stout);
-						}
-					});
-					restart_hostapd_service(next_step);
-				}
-			
+                        //console.log(stdout);
                         if (!error) console.log("... hostapd restarted!");
                         next_step();
                     });
@@ -274,7 +260,7 @@ module.exports = function() {
             
 				
 				//Add new network
-		function update_wpa_supplicant(next_step) {
+				function update_wpa_supplicant(next_step) {
                     write_template_to_file(
                         "./assets/etc/wpa_supplicant/wpa_supplicant.conf.template",
                         "/etc/wpa_supplicant/wpa_supplicant.conf",
@@ -304,7 +290,7 @@ module.exports = function() {
                         connection_info, next_step);
                 },
 
-		function restart_dnsmasq_service(next_step) {
+				function restart_dnsmasq_service(next_step) {
                     exec("sudo systemctl stop dnsmasq", function(error, stdout, stderr) {
                         if (!error) console.log("... dnsmasq server stopped!");
                         else console.log("... dnsmasq server failed! - " + stdout);
@@ -315,10 +301,6 @@ module.exports = function() {
                 function restart_hostapd_service(next_step) {
                     exec("sudo systemctl stop hostapd", function(error, stdout, stderr) {
                         //console.log(stdout);
-			if (config.debug.enabled) { 
-				console.log("DEBUG: output for sudo systemctl stop hostapd");
-				console.dir(stdout, {depth:null});
-			}
                         if (!error) console.log("... hostapd stopped!");
                         next_step();
                     });

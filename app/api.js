@@ -45,6 +45,8 @@ module.exports = function(wifi_manager, callback) {
     app.get("/api/rescan_wifi", function(request, response) {
         console.log("Server got /rescan_wifi");
         iwlist(function(error, result) {
+		console.log(error);
+		console.log(result);
             log_error_send_success_with(result[0], error, response);
         });
     });
